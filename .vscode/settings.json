@@ -1,0 +1,13 @@
+{
+    "go.useLanguageServer": true,
+    "go.formatTool": "gofmt",
+    "go.lintOnSave": "package",
+    "go.vetOnSave": "package",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true
+}

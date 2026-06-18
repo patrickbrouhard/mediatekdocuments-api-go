@@ -1,0 +1,10 @@
+{
+    "recommendations": [
+        "golang.Go",
+        "ms-azuretools.vscode-containers", // Gestion Docker/containers dans VS Code
+        "redhat.vscode-yaml", // Validation et auto-complétion YAML
+        "humao.rest-client", // Tester des requêtes HTTP directement dans VS Code
+        "eamodio.gitlens" // Outils Git avancés : historique, blame, diff
+    ],
+    "unwantedRecommendations": []
+}

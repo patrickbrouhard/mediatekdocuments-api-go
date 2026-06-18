@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "docker compose up",
+            "type": "shell",
+            "command": "docker compose up --build",
+            "problemMatcher": []
+            // Lance les conteneurs Docker et reconstruit les images
+        },
+        {
+            "label": "go test",
+            "type": "shell",
+            "command": "go test ./...",
+            "problemMatcher": [
+                "$go"
+            ]
+            // Exécute tous les tests Go du projet
+        },
+        {
+            "label": "go fmt",
+            "type": "shell",
+            "command": "gofmt -w .",
+            "problemMatcher": []
+        }
+        // Formatte automatiquement tout le code Go
+    ]
+}
