@@ -16,7 +16,7 @@ func main() {
 	logger.Info("Starting server", "addr", ":8080")
 
 	if err := http.ListenAndServe(":8080", router); err != nil {
-		logger.Error("Server sttopped", "error", err)
+		logger.Error("Server stopped", "error", err)
 		os.Exit(1)
 	}
 }
