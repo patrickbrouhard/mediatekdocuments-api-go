@@ -7,6 +7,7 @@ import (
 	"os"
 
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/config"
+	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/database"
 	apihttp "github.com/patrickbrouhard/mediatekdocuments-api-go/internal/http"
 )
 
@@ -14,11 +15,21 @@ func main() {
 	logger := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 
 	cfg := config.Load()
-	router := apihttp.NewRouter()
+
+	db, err := database.OpenMySQL(cfg)
+	if err != nil {
+		logger.Error("failed to open database", "error", err)
+		os.Exit(1)
+	}
+	defer db.Close()
+
+	router := apihttp.NewRouter(db)
 
 	logger.Info("starting server",
 		"addr", cfg.HTTPAddr,
 		"env", cfg.AppEnv,
+		"db_host", cfg.DBHost,
+		"db_name", cfg.DBName,
 	)
 
 	if err := http.ListenAndServe(cfg.HTTPAddr, router); err != nil {
