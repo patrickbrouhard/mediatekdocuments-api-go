@@ -12,4 +12,68 @@ Réécriture en Go de l’API REST MediaTekDocuments.
 
 ```bash
 make up
+````
+
+L’API est disponible sur :
+
+```text
+http://localhost:8080
 ```
+
+Endpoints disponibles :
+
+```text
+GET /api/v1/health
+GET /api/v1/ready
+```
+
+Exemples :
+
+```bash
+curl http://localhost:8080/api/v1/health
+curl http://localhost:8080/api/v1/ready
+```
+
+## Commandes utiles
+
+```bash
+make test
+make tidy
+make up
+make down
+make logs
+make db-shell
+make db-reset
+```
+
+## Architecture actuelle
+
+```text
+cmd/api
+→ point d’entrée de l’application
+
+internal/config
+→ lecture de la configuration par variables d’environnement
+
+internal/database
+→ connexion MySQL
+
+internal/http
+→ routes, handlers et réponses JSON
+```
+
+## Variables d’environnement
+
+Les variables disponibles sont documentées dans :
+
+```text
+.env.example
+```
+
+## Réinitialiser la base de développement
+
+```bash
+make db-reset
+```
+
+Cette commande supprime le volume Docker MySQL puis recrée la base depuis `mediatek86.sql`.
