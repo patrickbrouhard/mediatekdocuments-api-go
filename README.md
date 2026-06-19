@@ -12,7 +12,7 @@ Réécriture en Go de l’API REST MediaTekDocuments.
 
 ```bash
 make up
-````
+```
 
 L’API est disponible sur :
 
@@ -43,7 +43,7 @@ make up
 make down
 make logs
 make db-shell
-make db-reset
+make reset-dev
 ```
 
 ## Architecture actuelle
@@ -73,7 +73,5 @@ Les variables disponibles sont documentées dans :
 ## Réinitialiser la base de développement
 
 ```bash
-make db-reset
+make reset-dev
 ```
-
-Cette commande supprime le volume Docker MySQL puis recrée la base depuis `mediatek86.sql`.

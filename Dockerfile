@@ -10,7 +10,7 @@
 # 3. compile le binaire de l'application.
 ##################################
 
-# Utilise l'image golang:1.24-alpine, qui contient Go et les outils nécessaires pour compiler l'application.
+# Utilise l'image golang:1.26-alpine, qui contient Go et les outils nécessaires pour compiler l'application.
 # Nomme cette étape "builder" afin de pouvoir y faire référence plus tard.
 FROM golang:1.26-alpine AS builder
 

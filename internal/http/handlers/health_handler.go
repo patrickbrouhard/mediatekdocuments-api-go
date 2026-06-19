@@ -33,7 +33,7 @@ func (h *HealthHandler) Health(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-// Ready doit ensuite être changé quand on aura connecté la base de données et que l'on pourra vérifier si elle est prête. Pour l'instant, on renvoie toujours "ready".
+// Ready vérifie la disponibilité de la base de données et retourne l'état de préparation du service.
 func (h *HealthHandler) Ready(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 2*time.Second)
 	defer cancel()
