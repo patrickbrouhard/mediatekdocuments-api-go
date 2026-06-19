@@ -1,0 +1,15 @@
+# éviter d’envoyer des fichiers inutiles dans le contexte de build Docker
+
+.git
+.gitignore
+.env
+.vscode
+.idea
+
+tmp
+bin
+coverage.out
+
+Dockerfile
+docker-compose.yml
+README.md
