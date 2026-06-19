@@ -1,17 +1,16 @@
-APP_NAME=mediatekdocuments-api-go
-
-.PHONY: help run test tidy up down docker-logs db-shell db-reset
+.PHONY: help run test tidy build up down logs db-shell db-reset
 
 help:
-	@echo "Available commands:"
-	@echo "  make run          Run the API locally"
-	@echo "  make test         Run Go tests"
-	@echo "  make tidy         Tidy Go modules"
-	@echo "  make up    Start Docker services"
-	@echo "  make down  Stop Docker services"
-	@echo "  make docker-logs  Show Docker logs"
-	@echo "  make db-shell     Open MySQL shell"
-	@echo "  make db-reset     Reset Docker MySQL volume"
+	@echo "Commandes disponibles :"
+	@echo "  make run       Lance l'API localement"
+	@echo "  make test      Compile et lance les tests Go"
+	@echo "  make tidy      Nettoie les dépendances Go"
+	@echo "  make build     Construit l'image Docker de l'API"
+	@echo "  make up        Lance l'API et MySQL avec Docker Compose"
+	@echo "  make down      Arrête les services Docker Compose"
+	@echo "  make logs      Affiche les logs Docker Compose"
+	@echo "  make db-shell  Ouvre un shell MySQL"
+	@echo "  make db-reset  Réinitialise la base MySQL Docker"
 
 run:
 	go run ./cmd/api
@@ -22,24 +21,21 @@ test:
 tidy:
 	go mod tidy
 
+build:
+	docker compose build api
+
 up:
 	docker compose up -d
 
 down:
 	docker compose down
 
-docker-logs:
+logs:
 	docker compose logs -f
 
 db-shell:
-	docker compose exec mysql mysql --user=mediatek --password=mediatek mediatek86
+	MYSQL_PWD=mediatek docker compose exec mysql mysql --user=mediatek mediatek86
 
 db-reset:
 	docker compose down -v
-	docker compose up -d mysql
-
-docker-build:
-	docker build -t $(APP_NAME) .
-
-build:
-	$(MAKE) docker-build
+	docker compose up -d
