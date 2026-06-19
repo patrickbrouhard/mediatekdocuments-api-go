@@ -23,7 +23,7 @@ func main() {
 	}
 	defer db.Close()
 
-	router := apihttp.NewRouter(db)
+	router := apihttp.NewRouter(db, logger)
 
 	logger.Info("starting server",
 		"addr", cfg.HTTPAddr,
