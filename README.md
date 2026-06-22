@@ -75,3 +75,12 @@ Les variables disponibles sont documentées dans :
 ```bash
 make reset-dev
 ```
+
+## Références
+
+- [Chi Documentation](https://go-chi.io/#/README)
+- [Chi examples](https://github.com/go-chi/chi/tree/master/_examples)
+
+- [Go Documentation](https://golang.org/doc/)
+- [Docker Documentation](https://docs.docker.com/)
+- [Make Documentation](https://www.gnu.org/software/make/manual/make.html)
