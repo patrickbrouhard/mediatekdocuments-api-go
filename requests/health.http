@@ -3,3 +3,15 @@ GET http://localhost:8080/api/v1/health
 
 ### Readiness
 GET http://localhost:8080/api/v1/ready
+
+### Liste des livres
+GET http://localhost:8080/api/v1/livres
+
+### Livres avec pagination
+GET http://localhost:8080/api/v1/livres?page=1&taille_page=5
+
+### Livres avec tri
+GET http://localhost:8080/api/v1/livres?tri=auteur&ordre=desc
+
+### Paramètres invalides
+GET http://localhost:8080/api/v1/livres?page=0

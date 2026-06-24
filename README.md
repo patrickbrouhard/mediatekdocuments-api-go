@@ -81,6 +81,8 @@ make reset-dev
 - [Chi Documentation](https://go-chi.io/#/README)
 - [Chi examples](https://github.com/go-chi/chi/tree/master/_examples)
 
+- [How I write HTTP services in Go after 13 years](https://grafana.com/blog/how-i-write-http-services-in-go-after-13-years/)
+
 - [Go Documentation](https://golang.org/doc/)
 - [Docker Documentation](https://docs.docker.com/)
 - [Make Documentation](https://www.gnu.org/software/make/manual/make.html)
