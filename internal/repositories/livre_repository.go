@@ -126,3 +126,53 @@ func ordreTriLivres(ordre string) (string, error) {
 
 	return ordreSQL, nil
 }
+
+// RecupererParID récupère un livre à partir de son identifiant.
+func (r *LivreRepository) RecupererParID(
+	ctx context.Context,
+	id string,
+) (models.Livre, error) {
+	const requete = `
+		SELECT
+			l.id,
+			d.titre,
+			COALESCE(l.ISBN, ''),
+			COALESCE(l.auteur, ''),
+			COALESCE(l.collection, ''),
+			COALESCE(d.image, '') AS image,
+			g.id,
+			g.libelle,
+			p.id,
+			p.libelle,
+			r.id,
+			r.libelle
+		FROM livre l
+		JOIN document d ON d.id = l.id
+		JOIN genre g ON g.id = d.idGenre
+		JOIN ` + "`public`" + ` p ON p.id = d.idPublic
+		JOIN rayon r ON r.id = d.idRayon
+		WHERE l.id = ?
+	`
+
+	var livre models.Livre
+
+	err := r.db.QueryRowContext(ctx, requete, id).Scan(
+		&livre.ID,
+		&livre.Titre,
+		&livre.ISBN,
+		&livre.Auteur,
+		&livre.Collection,
+		&livre.Image,
+		&livre.Genre.ID,
+		&livre.Genre.Libelle,
+		&livre.Public.ID,
+		&livre.Public.Libelle,
+		&livre.Rayon.ID,
+		&livre.Rayon.Libelle,
+	)
+	if err != nil {
+		return models.Livre{}, fmt.Errorf("récupérer le livre %q : %w", id, err)
+	}
+
+	return livre, nil
+}

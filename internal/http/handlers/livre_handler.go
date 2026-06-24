@@ -1,9 +1,11 @@
 package handlers
 
 import (
+	"errors"
 	"log/slog"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/http/response"
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/models"
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/services"
@@ -57,6 +59,52 @@ func (h *LivreHandler) Lister(w http.ResponseWriter, r *http.Request) {
 	response.JSON(w, http.StatusOK, listeLivresReponse{
 		Donnees: livres,
 	})
+}
+
+// RecupererParID retourne un livre à partir de son identifiant.
+func (h *LivreHandler) RecupererParID(
+	w http.ResponseWriter,
+	r *http.Request,
+) {
+	id := chi.URLParam(r, "id")
+	if id == "" {
+		response.ErreurJSON(
+			w,
+			http.StatusBadRequest,
+			"id_invalide",
+			"L'identifiant du livre est obligatoire.",
+		)
+		return
+	}
+
+	livre, err := h.service.RecupererParID(r.Context(), id)
+	if err != nil {
+		if errors.Is(err, services.ErrLivreIntrouvable) {
+			response.ErreurJSON(
+				w,
+				http.StatusNotFound,
+				"livre_introuvable",
+				"Aucun livre ne correspond à cet identifiant.",
+			)
+			return
+		}
+
+		slog.Error(
+			"échec de la récupération d'un livre",
+			"id", id,
+			"error", err,
+		)
+
+		response.ErreurJSON(
+			w,
+			http.StatusInternalServerError,
+			"erreur_interne",
+			"Une erreur interne est survenue.",
+		)
+		return
+	}
+
+	response.JSON(w, http.StatusOK, livre)
 }
 
 func lireParametresListeLivres(

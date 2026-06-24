@@ -28,6 +28,7 @@ func NewRouter(db *sql.DB, logger *slog.Logger) *chi.Mux { // *chi.Mux = pointeu
 		r.Get("/ready", healthHandler.Ready)
 
 		r.Get("/livres", livreHandler.Lister)
+		r.Get("/livres/{id}", livreHandler.RecupererParID)
 	})
 
 	return r

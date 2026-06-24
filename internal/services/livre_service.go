@@ -2,10 +2,15 @@ package services
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/models"
 	"github.com/patrickbrouhard/mediatekdocuments-api-go/internal/repositories"
 )
+
+// ErrLivreIntrouvable indique qu'aucun livre ne correspond à l'identifiant demandé.
+var ErrLivreIntrouvable = errors.New("livre introuvable")
 
 // LivreService contient la logique applicative liée aux livres.
 type LivreService struct {
@@ -30,4 +35,21 @@ func (s *LivreService) Lister(
 	}
 
 	return livres, nil
+}
+
+// RecupererParID récupère un livre à partir de son identifiant.
+func (s *LivreService) RecupererParID(
+	ctx context.Context,
+	id string,
+) (models.Livre, error) {
+	livre, err := s.repository.RecupererParID(ctx, id)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return models.Livre{}, ErrLivreIntrouvable
+		}
+
+		return models.Livre{}, err
+	}
+
+	return livre, nil
 }
